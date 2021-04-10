@@ -59,7 +59,11 @@ echo("Rows: ", rows);
 echo("Columns: ", columuns);
 echo("Boxes: ", rows*columuns);
 echo("----------------------------------------");
-echo("Max diagonal height: ", sqrt(totalV*totalV+depth*depth));
+echo("Furniture width: ", totalH);
+// Total height is the vertical size + twice the material height
+totalFurnitureHeight = totalV+2*rowHeight;
+echo("Furniture height: ", totalV+2*rowHeight);
+echo("Max furniture diagonal height: ", sqrt(totalFurnitureHeight*totalFurnitureHeight+depth*depth));
 echo("----------------------------------------");
 echo("Horizontal planes A", totalH, "x", depth, "mm: ", 2);
 echo("Vertical planes ", totalV, "x", depth, "mm: ", columuns+1);
