@@ -11,15 +11,18 @@ columuns = 6;
 horizontalLenght = rowHeight+(boxSize*columuns)+columuns*rowHeight;
 totalH = (paddingLeft == 0) ? horizontalLenght : (horizontalLenght - boxSize + paddingLeft);
 
+// Calculate vertical size
+totalV = rows*boxSize + (rows-1)*rowHeight;
+
 // Horizontal top and bottom 
 cube([totalH, rowHeight, depth], false);
-translate([0, (rows*boxSize+rows*rowHeight)])
+translate([0, totalV])
 	cube([totalH, rowHeight, depth], false);
 	
 // Calculate the number of standard size plates
 platesPerRow = (paddingLeft > 0) ? columuns - 1 : columuns;
 // Horizontal
-for ( row = [0 : rows] ) {
+for ( row = [0 : rows-1] ) {
 	// the first box is with different size if left padding is greater than 0
 	startX = (paddingLeft > 0) ? paddingLeft+2*rowHeight : rowHeight;
 	translate([rowHeight, (row*(boxSize+rowHeight))])
@@ -37,7 +40,6 @@ for ( row = [0 : rows] ) {
 	}
 
 // Vertical columns
-totalV = rows*boxSize + (rows)*rowHeight;
 // The first vertical side
 cube([rowHeight, totalV, depth], false);
 // Next vertical sides
