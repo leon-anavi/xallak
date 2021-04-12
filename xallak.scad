@@ -2,27 +2,28 @@ rowHeight = 18;
 boxSize = 330;
 depth = 390;
 
-paddingLeft = 304;
+paddingLeft = 314;
 
 rows = 7;
 columuns = 6;
 
 // Calculate horizontal size lenght
-horizontalLenght = rowHeight+(boxSize*columuns)+columuns*rowHeight;
+horizontalLenght = rowHeight+(boxSize*columuns)+(columuns-2)*rowHeight;
 totalH = (paddingLeft == 0) ? horizontalLenght : (horizontalLenght - boxSize + paddingLeft);
 
 // Calculate vertical size
 totalV = rows*boxSize + (rows-1)*rowHeight;
 
-// Horizontal top and bottom 
-cube([totalH, rowHeight, depth], false);
-translate([0, totalV])
+// Horizontal top and bottom
+translate([rowHeight, 0])
+	cube([totalH, rowHeight, depth], false);
+translate([rowHeight, totalV])
 	cube([totalH, rowHeight, depth], false);
 	
 // Calculate the number of standard size plates
 platesPerRow = (paddingLeft > 0) ? columuns - 1 : columuns;
 // Horizontal
-for ( row = [0 : rows-1] ) {
+for ( row = [1 : rows-1] ) {
 	// the first box is with different size if left padding is greater than 0
 	startX = (paddingLeft > 0) ? paddingLeft+2*rowHeight : rowHeight;
 	translate([rowHeight, (row*(boxSize+rowHeight))])
@@ -41,12 +42,14 @@ for ( row = [0 : rows-1] ) {
 
 // Vertical columns
 // The first vertical side
-cube([rowHeight, totalV, depth], false);
+cube([rowHeight, totalV+rowHeight, depth], false);
 // Next vertical sides
 verticalStartX = (paddingLeft > 0) ? paddingLeft + rowHeight : boxSize + rowHeight;
 for ( v = [0 : columuns-1] ) {
+	colHeight = (v == columuns-1) ? totalV + rowHeight: totalV;
+	colStartY = (v == columuns-1) ? 0: rowHeight;
     translate([verticalStartX+(v*(boxSize+rowHeight)), 0])
-		cube([rowHeight, totalV, depth], false);
+		cube([rowHeight, colHeight, depth], false);
 }
 
 // Calculate the total are and estimate min material pieces
@@ -59,16 +62,17 @@ echo("Rows: ", rows);
 echo("Columns: ", columuns);
 echo("Boxes: ", rows*columuns);
 echo("----------------------------------------");
-echo("Furniture width: ", totalH);
+echo("Furniture width: ", totalH+(2*rowHeight));
 // Total height is the vertical size + twice the material height
 totalFurnitureHeight = totalV+2*rowHeight;
 echo("Furniture height: ", totalV+2*rowHeight);
 echo("Max furniture diagonal height: ", sqrt(totalFurnitureHeight*totalFurnitureHeight+depth*depth));
 echo("----------------------------------------");
 echo("Horizontal planes A", totalH, "x", depth, "mm: ", 2);
-echo("Vertical planes ", totalV, "x", depth, "mm: ", columuns+1);
-echo("Horizontal planes B", boxSize, "x", depth, "mm: ", rows*(columuns-1));
-echo("Horizontal planes C", 302, "x", depth, "mm: ", rows);
+echo("Vertical planes sides ", totalV+2*rowHeight, "x", depth, "mm: ", 2);
+echo("Vertical planes middle ", totalV, "x", depth, "mm: ", columuns-1);
+echo("Horizontal planes B", boxSize, "x", depth, "mm: ", (rows-1)*(columuns-1));
+echo("Horizontal planes C", paddingLeft, "x", depth, "mm: ", rows-1);
 echo("----------------------------------------");
 echo("Joint plates: ", ((columuns-1)*(rows-1)));
 echo("Dowels: ", 2*((columuns+1)*(rows-1)));
