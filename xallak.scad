@@ -74,11 +74,11 @@ echo("Vertical planes middle ", totalV, "x", depth, "mm: ", columuns-1);
 echo("Horizontal planes B", boxSize, "x", depth, "mm: ", (rows-1)*(columuns-1));
 echo("Horizontal planes C", paddingLeft, "x", depth, "mm: ", rows-1);
 echo("----------------------------------------");
-echo("Joint plates: ", ((columuns-1)*(rows-1)));
+echo("Joint plates: ", ((columuns+1)*(rows-1)));
 echo("Dowels: ", 2*((columuns+1)*(rows-1)));
 // Couple of screws for each short side of each column and
 // 3 screws for the joint plates
-echo("Screws: ", 2*(columuns+1)+3*((columuns-1)*(rows-1)));
+echo("Screws: ", 3*(columuns+1)+3*((columuns+1)*(rows-1)));
 echo("----------------------------------------");
 echo("Area: ", area, "mm2");
 echo("Material count: ", materialCount);
