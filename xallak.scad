@@ -72,7 +72,10 @@ echo("Horizontal planes A", totalH, "x", depth, "mm: ", 2);
 echo("Vertical planes sides ", totalV+2*rowHeight, "x", depth, "mm: ", 2);
 echo("Vertical planes middle ", totalV, "x", depth, "mm: ", columuns-1);
 echo("Horizontal planes B", boxSize, "x", depth, "mm: ", (rows-1)*(columuns-1));
-echo("Horizontal planes C", paddingLeft, "x", depth, "mm: ", rows-1);
+if (0 < paddingLeft)
+{
+	echo("Horizontal planes C", paddingLeft, "x", depth, "mm: ", rows-1);
+}
 echo("----------------------------------------");
 echo("Joint plates: ", ((columuns+1)*(rows-1)));
 echo("Dowels: ", 2*((columuns+1)*(rows-1)));
